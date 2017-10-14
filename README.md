@@ -24,6 +24,30 @@ devServer:{
     }
 
 
+在package.json文件中配置一下 "server" 执行的脚本, 可在执行命令后自动打开浏览器:
+"scripts": {
+    "server": "webpack-dev-server --open",
+    "build": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons"
+  }
+
+
+@@ webpack常用命令使用如下：
+1、默认使用当前目录的webpack.config.js作为配置文件。如果要指定另外的配置文件，可以执行：webpack –config webpack.custom.config.js
+
+2、webpack 的执行也很简单，直接执行  $  webpack --display-error-details
+即可，后面的参数“–display-error-details”是推荐加上的，方便出错时能查阅更详尽的信息（比如 webpack 寻找模块的过程），从而更好定位到问题。 
+
+3、常用命令 
+webpack的使用和browserify有些类似，下面列举几个常用命令：
+    1、webpack 最基本的启动webpack命令
+    2、webpack -w 提供watch方法，实时进行打包更新
+    3、webpack -p 对打包后的文件进行压缩
+    4、webpack -d 提供SourceMaps，方便调试
+    5、webpack --colors 输出结果带彩色，比如：会用红色显示耗时较长的步骤
+    6、webpack --profile 输出性能数据，可以看到每一步的耗时
+    7、webpack --display-modules 默认情况下 node_modules 下的模块会被隐藏，加上这个参数可以显示这些被隐藏的模块
+
+前面的四个命令比较基础，使用频率会比较大，后面的命令主要是用来定位打包时间较长的原因，方便改进配置文件，提高打包效率。
 </code>
 </pre>
 
