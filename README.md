@@ -45,7 +45,9 @@ webpack的使用和browserify有些类似，下面列举几个常用命令：
     4、webpack -d 提供SourceMaps，方便调试
     5、webpack --colors 输出结果带彩色，比如：会用红色显示耗时较长的步骤
     6、webpack --profile 输出性能数据，可以看到每一步的耗时
-    7、webpack --display-modules 默认情况下 node_modules 下的模块会被隐藏，加上这个参数可以显示这些被隐藏的模块
+    7、webpack --display-modules 默认情况下 node_modules 下的模块会被隐藏，加上这个参数可以显示这些被隐藏的模块，依赖什么而打包都会列出来
+    8、webpack --progress 当前打包的进度条
+    9、webpack --display-reasons 打包模块的原因，因为什么打包
 
 前面的四个命令比较基础，使用频率会比较大，后面的命令主要是用来定位打包时间较长的原因，方便改进配置文件，提高打包效率。
 </code>
