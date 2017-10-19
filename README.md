@@ -40,7 +40,7 @@ devServer:{
 3、常用命令 
 webpack的使用和browserify有些类似，下面列举几个常用命令：
     1、webpack 最基本的启动webpack命令
-    2、webpack -w 提供watch方法，实时进行打包更新
+    2、webpack -w (webpack --watch的简写来的)该watch方法，可以实时进行打包更新
     3、webpack -p 对打包后的文件进行压缩
     4、webpack -d 提供SourceMaps，方便调试
     5、webpack --colors 输出结果带彩色，比如：会用红色显示耗时较长的步骤
@@ -50,6 +50,8 @@ webpack的使用和browserify有些类似，下面列举几个常用命令：
     9、webpack --display-reasons 打包模块的原因，因为什么打包
 
 前面的四个命令比较基础，使用频率会比较大，后面的命令主要是用来定位打包时间较长的原因，方便改进配置文件，提高打包效率。
+
+@只安装生产环境中的依赖包: npm install --production
 </code>
 </pre>
 
@@ -399,5 +401,90 @@ module.exports = {
 }
  
 总结：调试在开发中也是必不可少的，但是一定要记得在上线前一定要修改webpack配置，在打出上线包。
+</code>
+</pre>
+
+<p>15. 关于开发环境与生产环境的配置问题</p>
+
+<pre>
+<code>
+@只安装生产环境中的依赖包: npm install --production
+
+1、开发环境与生成环境的打包配置如下：
+    console.log(encodeURIComponent(process.env.type)); // 打印我们npm run dev输出的值
+    // 这里的type是npm执行script的build通过set关键字传过来的
+    if (process.env.type === "build") {
+    // 生产环境的
+    var website = {
+        publicPath: "http://www.qqyiyi.cn/"
+    }
+    } else {
+    // 开发环境的
+    var website = {
+        publicPath: "http://192.168.0.106:8088/"
+    }
+    }
+
+
+2、window环境下的配置：
+    "scripts": {
+        "dev": "set type=dev&webpack",
+        "build": "set type=build&webpack"
+    }
+
+3、mac和Linux环境下的配置：
+    "scripts": {
+        "dev": "export type=dev&&webpack",
+        "build": "export type=build&&webpack"
+    }
+</code>
+</pre>
+
+<p>16. 在webpack中引入第三方库</p>
+
+<pre>
+<code>
+在webpack中引入第三方库有两种方法：
+    1、直接在项目中 import jQuery from 'jquery'; 加载进来也行
+    2、或者利用webpack自身携带的插件ProvidePlugin来引入，
+    然后再plugins选项配置即可，如下：
+        plugins: [
+            new webpack.ProvidePlugin({
+            jQuery: "jquery", // 配置引入第三方库jquery
+        })]
+</code>
+</pre>
+
+<p>17. 配置webpack中的watch方法来实时打包更新</p>
+
+<pre>
+<code>
+1、webpack提供了功能，直接配置就可以使用：
+    module: {
+        rules: [
+            watchOptions: { // 实时打包更新
+                poll: 1000, // 每1s时间就检测文件是否修改，修改了就自动帮我们打包
+                aggregeateTimeout: 500, // 设置的是我们连续按Ctrl+S保存时，500毫秒内只执行打包一次
+                ignored: /node_modules/, // 这个文件夹不监视
+            }
+        ]
+    }
+
+2、还要在package.json的script选项配置脚本 加上--watch：
+    "scripts": {
+    "dev": "set type=dev&webpack --watch"
+  }
+</code>
+</pre>
+
+<p>18. 打包的文件里最前面打印出版权类似的信息</p>
+
+<pre>
+<code>
+配置如下：
+    plugins: [
+        // 在每次打包的文件里第一行都会带上这条的信息的
+        new webpack.BannerPlugin('qqyiyi版权所有')
+    ]
 </code>
 </pre>

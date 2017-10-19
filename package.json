@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --hot --port 8082",
     "server": "webpack-dev-server --open",
-    "build": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons"
+    "dev": "set type=dev&webpack",
+    "build": "set type=build&webpack --config webpack.config.js --watch --progress --display-modules --colors --display-reasons"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
+    "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "html-webpack-plugin": "^2.30.1",
@@ -27,6 +29,7 @@
     "less": "^3.0.0-alpha.3",
     "less-loader": "^4.0.5",
     "node-sass": "^4.5.3",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
     "postcss-loader": "^2.0.7",
     "purify-css": "^1.2.5",
     "purifycss-webpack": "^0.7.0",
@@ -36,5 +39,8 @@
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "vue": "^2.5.2"
+  }
 }
