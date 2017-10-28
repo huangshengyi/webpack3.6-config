@@ -58,7 +58,8 @@ const moduleRules = {
 		use: {
 			loader: "babel-loader"
 		},
-		exclude: /(node_modules|bower_components)/
+    exclude: /(node_modules|bower_components)/,
+    include: /\/(node_modules|bower_components)\/jquery/
 	}]
 };
 

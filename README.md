@@ -488,3 +488,20 @@ module.exports = {
     ]
 </code>
 </pre>
+
+<p>19. 拷贝项目中的静态资源文件 [插件的GitHub地址](https://github.com/webpack-contrib/copy-webpack-plugin)</p>
+
+<pre>
+<code>
+使用说明(配置好了之后,插件会递归式搜索把文件目录及文件一起拷贝进去):
+  1、现在webpack.config.js文件中引入该插件
+    const copyWebpackPlugin = require('copy-webpack-plugin'); // 集中拷贝静态资源
+  2、然后在plugins配置项进行配置
+    new copyWebpackPlugin([
+      {
+        from: __dirname + '/src/public', // 需要拷贝的资源来自哪个文件夹
+        to: './public' // “./”是指上面output导出的dist文件夹的根目录里的public文件夹下
+      }
+    ]), // 拷贝项目的静态资源文件
+</code>
+</pre>

@@ -9,6 +9,6 @@ import sass from './css/sayi.scss';
 {
     let str = 'hello webpack3.6!!!!9890';
     document.getElementById('title').innerHTML = str;
-    jQuery('#title').html(str + '<br/>' + jQuery('#title').html());
-    console.log(jQuery);
+    // jQuery('#title').html(str + '<br/>' + jQuery('#title').html());
+    // console.log(jQuery);
 }

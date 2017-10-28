@@ -8,7 +8,8 @@ const extractTextPlugin = require('extract-text-webpack-plugin'); // 分离CSS�
 const purifyCSSPlugin = require('purifycss-webpack'); // 使用purifycss插件从你的CSS删除未使用到的选择器
 // const entry = require('./webpackConfig/entry.js'); // 引入入口文件
 const moduleRulesLoader = require('./webpackConfig/moduleRulesLoader.js'); // loader规则的配置
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'); // 压缩CSS
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'); // 压缩CSS
+const copyWebpackPlugin = require('copy-webpack-plugin'); // 集中拷贝静态资源
 
 // console.log(encodeURIComponent(process.env.type));
 // 这里的type是npm执行script的build通过set关键字传过来的
@@ -16,12 +17,13 @@ if (process.env.type === "build") {
   // 生产环境的
   var website = {
     publicPath: "http://www.qqyiyi.cn/"
+    // publicPath: "http://192.168.0.106/aaa/webpack3/dist/" // 打包后的测试地址
   }
 } else {
   // 开发环境的
   var website = {
-    // publicPath: "http://192.168.0.106:8088/"
-    publicPath: "http://192.168.0.106/aaa/webpack3/dist/"
+    publicPath: "http://192.168.0.106:8088/" // 热更新测试
+    // publicPath: "http://192.168.0.106/aaa/webpack3/dist/" // 打包后的测试地址
   }
 }
 
@@ -51,7 +53,8 @@ module.exports = {
       minChunks: 2 // 最小抽离出两个文件
     }),
     new uglifyJsPlugin({
-      exclude: /(node_modules|bower_components)/
+      exclude: /(node_modules|bower_components)/,
+      include: /\/(node_modules|bower_components)\/jquery/
     }), // 压缩打包的js
     new webpack.ProvidePlugin({
       jQuery: "jquery", // 也可以使用webpack自带的ProvidePlugin插件来引入第三方库jquery
@@ -70,6 +73,13 @@ module.exports = {
       paths: glob.sync(path.join(__dirname, 'src/*.html')), // 去除.html文件中没有使用到的css样式
     }), // 去除没用到的css插件
     new webpack.BannerPlugin('qqyiyi版权所有'), // 在每次打包都带上这个版权的信息
+    new copyWebpackPlugin([
+      {
+        from: __dirname + '/src/public', // 需要拷贝的资源来自哪个文件夹
+        to: './public' // “./”是指上面output导出的dist文件夹的根目录里的public文件夹下
+      }
+    ]), // 拷贝项目的静态资源文件
+    new webpack.HotModuleReplacementPlugin(), // 热更新，如果不能热更新就加上这个插件
     new cleanWebpackPlugin(['dist']), // 每次构建前清理 /dist 文件夹
   ],
   devServer: { // 配置服务与热更新
